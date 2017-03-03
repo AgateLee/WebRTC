@@ -9,7 +9,8 @@
 
 # WebRTC KOA2
 
-扩展自 [廖雪峰的Node.js教程](http://www.liaoxuefeng.com/wiki/001434446689867b27157e896e74d51a89c25cc8b43bdb3000/001472794708264206fcf1589bb43caa0395752aa26538c000)，结合了 Demo 中的音视频通信。
+* 扩展自 [廖雪峰的Node.js教程](http://www.liaoxuefeng.com/wiki/001434446689867b27157e896e74d51a89c25cc8b43bdb3000/001472794708264206fcf1589bb43caa0395752aa26538c000)中的聊天室，集成了简易WebRTC
+* 集成了自签名https、mysql数据库
 
 示例如下：
 
