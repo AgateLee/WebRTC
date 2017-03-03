@@ -1,0 +1,76 @@
+{% extends "base.html" %} {% block main %}
+<div id="important" style="color:#00171f; background-color:#007ea7; padding:20px 0; margin:-20px 0 20px 0;">
+    <div class="container" style="text-align:center;">
+        <h1 style="color:#fff; font-size:48px;">Start Communicate</h1>
+        <p style="font-size:24px; line-height:30px">Talk With Friends Using Browsers</p>
+    </div>
+</div>
+<div class="container">
+    <div class="row" style="width:50%; margin:20px 25% 20px 25%;">
+        <div class="col-md-12">
+            <div class="panel panel-default">
+                <div id="errorMsg" class="alert alert-danger"></div>
+                <div class="panel-heading">
+                    <h3 class="panel-title"><span class="fa fa-user"></span> Welcome</h3>
+                </div>
+                <div class="panel-body">
+                    <form action="/register" method="post">
+                        <div class="form-group">
+                            <label>Name</label>
+                            <input type="text" name="username" class="form-control" placeholder="Name">
+                        </div>
+                        <div class="form-group">
+                            <label>Password</label>
+                            <input type="password" name="password" class="form-control" placeholder="Password">
+                        </div>
+                        <div class="form-group">
+                            <label>Password Again</label>
+                            <input type="password" name="password2" class="form-control" placeholder="Password">
+                        </div>
+                        <button type="submit" class="btn btn-primary" style="float:right">Register</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+function getAttri(s, st, ed) {
+    let pos = s.indexOf(st);
+    if(pos === -1)
+        return "";
+    else {
+        pos = pos + st.length;
+        let pos2 = s.indexOf(ed, pos);
+        if(pos2 === -1)
+            return s.substr(pos);
+        else 
+            return s.substr(pos, pos2 - pos);
+    }
+}
+
+function getRestAttri(s, st, ed) {
+    let pos = s.indexOf(st);
+    if(pos === -1)
+        return s;
+    else {
+        let ret = s.substr(0, pos);
+        pos = pos + st.length;
+        let pos2 = s.indexOf(ed, pos);
+        if(pos2 === -1)
+            return ret;
+        else 
+            return ret + s.substr(pos2 + ed.length);
+    }
+}
+
+let prompt = getAttri(document.cookie, 'prompt=', ';');
+let errorElement = document.querySelector('#errorMsg');
+if(prompt === "") {
+    errorElement.style.display = "none";
+} else {
+    errorElement.textContent = prompt;
+    document.cookie = getRestAttri(document.cookie, 'prompt=', ';');
+}
+</script>
+{% endblock %}
