@@ -11,9 +11,17 @@ module.exports = {
             password2 = ctx.request.body.password2 || '';
         var userdata = await User.findOne({where: {name : username}});
 
+        let kept_name = ['none',];
+
         if(userdata !== null) {
             ctx.cookies.set('prompt', 'Already exist, please choose another name.', {httpOnly:false});
 
+            ctx.render('register.html', {
+                title: 'Welcome'
+            });
+        } else if(kept_name.indexOf(username) != -1) {
+            ctx.cookies.set('prompt', 'This name is kept by system.', {httpOnly:false});
+            
             ctx.render('register.html', {
                 title: 'Welcome'
             });

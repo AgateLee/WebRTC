@@ -6,11 +6,19 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="description" content="My WebRTC Test">
     <title>{{ title }}</title>
+    <link rel="icon" href="/static/images/icon.ico" type="image/x-icon" />
+    <link rel="shortcut icon" href="/static/images/icon.ico" type="image/x-icon" />
     <link rel="stylesheet" href="/static/css/bootstrap.css">
     <link rel="stylesheet" href="/static/fontawsome/css/font-awesome.min.css">
     <script src="/static/js/jquery.min.js"></script>
     <script src="/static/js/vue.min.js"></script>
     <script src="/static/js/bootstrap.js"></script>
+    <!-- include the script -->
+    <script src="/static/alterfy/alertify.min.js"></script>
+    <!-- include the style -->
+    <link rel="stylesheet" href="/static/alterfy/css/alertify.min.css" />
+    <!-- include a theme -->
+    <link rel="stylesheet" href="/static/alterfy/css/themes/default.min.css" />
 </head>
 
 <body>
@@ -23,6 +31,12 @@
                 <ul class="nav navbar-nav">
                     <li><a href="/register">Register</a></li>
                 </ul>
+                <!-- <ul class="nav navbar-nav">
+                    <li><a href="/webrtc">P2P WebRTC</a></li>
+                </ul>
+                <ul class="nav navbar-nav">
+                    <li><a href="/chartroom">Chartroom</a></li>
+                </ul> -->
                 <ul class="nav navbar-nav" style="float:right;">
                     <li><a href="/signout">Sign Out</a></li>
                 </ul>
@@ -30,11 +44,30 @@
         </div>
     </header>
     {% block main %} {% endblock %}
-    <footer style="background-color:#ddd; padding: 15px 0; height: 50px; position: relative; bottom: 0; width: 100%;">
+    <footer style="background-color:#ddd; padding: 15px 0; height: 50px;">
         <div class="container">
-            <p style="float:right"> WebRTC Test Demo <p>
+            <p style="float:right"> WebRTC &nbsp; <p>
         </div>
     </footer>
+    
 </body>
-
+<style>
+    /* 动态为footer添加类fixed-bottom */
+    .fixed-bottom {position: fixed;bottom: 0;width:100%;}
+</style>
+<script>
+    $(function(){
+    function footerPosition(){
+        $("footer").removeClass("fixed-bottom");
+        var contentHeight = document.body.scrollHeight,//网页正文全文高度
+            winHeight = window.innerHeight;//可视窗口高度，不包括浏览器顶部工具栏
+        if(!(contentHeight > winHeight)){
+            //当网页正文高度小于可视窗口高度时，为footer添加类fixed-bottom
+            $("footer").addClass("fixed-bottom");
+        }
+    }
+    footerPosition();
+        $(window).resize(footerPosition);
+    });
+</script>
 </html>

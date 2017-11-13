@@ -5,10 +5,10 @@ let User = model.User;
 
 module.exports = {
     'GET /signin': async (ctx, next) => {
-        if(ctx.cookies.get('name') !== null) {
-            ctx.render('signin.html', {
+        if(ctx.cookies.get('name') !== undefined) {
+            ctx.render('webrtc.html', {
                 title: 'Sign In OK',
-                // name: username
+                name: ctx.cookies.get('sipname')
             });
         } else {
             ctx.cookies.set('prompt', null);
@@ -31,20 +31,23 @@ module.exports = {
             console.log('signin ok!');
             userdata.last_time = Date.now();
             await userdata.save();
-            
+            var myDate = new Date();
             let user = {
                 id: userdata.id,
                 name: username,
-                image: userdata.id % 20
+                image: myDate.getSeconds() % 20
             };
 
             let value = Buffer.from(JSON.stringify(user)).toString('base64');
             console.log(`Set cookie value: ${value}`);
             ctx.cookies.set('name', value, {httpOnly:false});
+            ctx.cookies.set('sipname', username, {httpOnly:false});
+            ctx.cookies.set('sippasswd', password, {httpOnly:false});
 
-            ctx.render('signin.html', {
+            ctx.render('webrtc.html', {
                 title: 'Sign In OK',
-                name: username
+                name: username,
+                headicon: '/static/images/' + user.image + '.png'
             });
         } else {
             console.log('signin failed!');
@@ -52,14 +55,5 @@ module.exports = {
                 title: 'Sign In Failed'
             });
         }
-    },
-
-    'GET /signout': async (ctx, next) => {
-        ctx.cookies.set('prompt', null);
-        ctx.cookies.set('name', null);
-
-        ctx.render('index.html', {
-            title: 'Welcome'
-        });
     }
 };
